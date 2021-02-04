@@ -54,6 +54,8 @@ class SimulationController(Resource):
             abort(400) 
         
         nb_records = int(control["nb_of_records"])
+        percentage_ui = int(control["percentage"])
+        percentage = percentage_ui / 100
         if control["simulation"] == ReeferSimulator.SIMUL_POWEROFF:
             metrics=self.simulator.generatePowerOffTuples(control["containerID"],nb_records,control["product_id"])
         elif  control["simulation"]  == ReeferSimulator.SIMUL_CO2:
@@ -61,7 +63,7 @@ class SimulationController(Resource):
         elif  control["simulation"]  == ReeferSimulator.SIMUL_O2:
             metrics=self.simulator.generateO2Tuples(control["containerID"],nb_records,control["product_id"])
         elif  control["simulation"]  == ReeferSimulator.SIMUL_TEMPERATURE:
-            metrics=self.simulator.generateTemperatureTuples(control["containerID"],nb_records,control["product_id"])
+            metrics=self.simulator.generateTemperatureTuples(control["containerID"],nb_records,control["product_id"],percentage)
         elif  control["simulation"]  == ReeferSimulator.NORMAL:
             metrics=self.simulator.generateNormalTuples(control["containerID"],nb_records,control["product_id"])
         else:

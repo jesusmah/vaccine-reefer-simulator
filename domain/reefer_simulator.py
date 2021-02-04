@@ -321,6 +321,7 @@ class ReeferSimulator:
                                    cid: str = "C01",
                                    nb_records: int = MAX_RECORDS,
                                    product_id: str = 'P01',
+                                   percentage: int = PER_NB_WRONG_RECORDS,
                                    start_time: datetime.datetime = None):
         '''
         Generate a dataframe of training data for temperature sensor malfunctions.
@@ -332,7 +333,7 @@ class ReeferSimulator:
         df = self.generateNormalRecords(
             cid, nb_records, product_id, start_time)
         _generateFaultyValue(df,
-                             int(nb_records * PER_NB_WRONG_RECORDS),
+                             int(nb_records * percentage),
                              NB_WRONG_RECORD_SERIE,
                              "temperature",
                              products[product_id]['T'] + 20, 3 * SIGMA_BASE)
@@ -346,9 +347,10 @@ class ReeferSimulator:
                                   cid: str = "C01",
                                   nb_records: int = MAX_RECORDS,
                                   product_id: str = 'P01',
+                                  percentage: int = PER_NB_WRONG_RECORDS,
                                   start_time: datetime.datetime = None):
         df = self.generateTemperatureRecords(
-            cid, nb_records, product_id, start_time)
+            cid, nb_records, product_id, percentage, start_time)
         return list(df.to_records(index=False))
 
 
